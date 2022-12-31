@@ -1,7 +1,6 @@
 pandas
 numpy
 streamlit
-requests
 plotly
 geopy
 urbanpy
