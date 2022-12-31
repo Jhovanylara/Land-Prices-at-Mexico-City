@@ -8,3 +8,5 @@ missingno
 geopy
 prediction
 PIL
+urbanpy
+matplotlib

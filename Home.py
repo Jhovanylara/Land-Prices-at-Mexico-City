@@ -5,7 +5,12 @@ import plotly.express as px
 import plotly.graph_objs as go
 from prediction import predict_price
 from geopy import Nominatim
+import urbanpy as up
+import matplotlib.pyplot as plt
 
+col1, col2, col3=st.columns(3)
+with col2:
+    st.image('https://raw.githubusercontent.com/Jhovanylara/Land-Prices-at-Mexico-City/master/Images/logo-color.svg')
 
 st.title("TRULLY CHALLENGE")
 
@@ -23,8 +28,8 @@ d1,d2=st.columns(2)
 with d1:
     st.subheader("Alcance")
     '''Obtener documentación pertinente para explicar el costo/m2 dentro de la ciudad de México, 
-    se seleccionaran 4 tipos de datos de lugares: alimentos, salud, educación, servicios financieros, 
-    y se tomará la distancia en vuelo de pájaro para cada uno de los lugares a la coordenada base de predicción.'''
+    se seleccionaran 4 categorías de sitios de interes: alimentos, salud, educación, servicios financieros, 
+    y se tomará la distancia en vuelo de pájaro para cada uno de los sitios a la coordenada base de predicción.'''
 with d2:
     st.subheader("Fuera de alcance")
     '''Se obtendrán unicamente datos geográficos de la ciudad de México como variables, no se está considerando el tiempo
@@ -34,18 +39,60 @@ st.write('***')
 
 h1,h2,h3=st.columns(3)
 with h2:
-    st.header("Metodology")
+    st.header("Metodología")
 '''
-The work is based on a quantitative approach which will help to establish relations between quantitative variables from socioeconomic and health indicators, such as GDP per capita,
-public spending on education, under-5 mortality rate, % of rural population, % of poverty, % of total
-health spending etc. which can help to generate a context of the possible influence of each variable in
-life expectancy at birth.
+Primero se completó la columna Alcaldía del df original a partir de los datos de geolocalización de las columnas de latitud
+y longitud. Gracias a la función geolocator, se puede obtener la dirección completa a partir de las coordenadas
+y así podemos saber a que alcaldía pertenece cada punto a geolocalizar.
 
-We have worked on the development of a ML algorithm that allows us to generate future predictions using
-expectations of these indicators.'''
+Luego se procesaron los Outliers en la columna objetivo con un ZScore>=2.5 para así eliminar 8 elementos que pudieran
+generar ruido en la predicción.
+
+Se eligieron 4 categorías de sitios de interes que al estar más cercanos a un terreno, pudieran modificar el costo del m2 y se tomó la distancia a cada sitio de la categoría, para luego incluirlo al dataframe original. 
+
+    - Alimentación: Tiendas de conveniencia, carnicerías, supermercados, verdulerías, malls
+    - Salud: Hospitales, farmacias, clinicas, doctores
+    - Educación: Escuelas, Universidades, kinders
+    - Finanzas: Bancos, cajeros automáticos
+'''
+tab1, tab2=st.tabs(['Dataframe crudo', 'Dataframe con ETL'])
+with tab1:
+    'Dataframe crudo'
+    df=pd.read_excel('https://github.com/Jhovanylara/Land-Prices-at-Mexico-City/blob/master/Datasets/Challenge_CDMX_Mapa(preciom2).xlsx?raw=true')
+    st.dataframe(df)
+with tab2:
+    'Dataframe enriquecido'
+    df1=pd.read_csv('https://raw.githubusercontent.com/Jhovanylara/Land-Prices-at-Mexico-City/master/Datasets/ETL.csv')
+    st.dataframe(df1)
+st.write('***')
+st.header("Entrenamiento")
+'''
+Para la predicción se limpiaron los Outliers, se eliminaron columnas redundantes y se entrenó con el modelo HuberRegressor. Luego se hizo la predicción
+para cada elemento faltante en la columna target del dataframe, para quedar de la siguiente manera:
+'''
+mx=up.download.nominatim_osm('Ciudad de Mexico, Mexico')
+
+df3=pd.read_csv('https://raw.githubusercontent.com/Jhovanylara/Land-Prices-at-Mexico-City/master/Datasets/CDMXcomplete.csv')
+st.dataframe(df3)
 
 
+st.subheader('Visualizamos las zonas coloreando por precio')
+fig = px.scatter_mapbox(
+    df3,
+    lat = "lat",
+    lon = "lon",
+    color = "target",
+    width = 900,
+    height = 600,
+    hover_data = ["Colonia", "target"]
+    );
 
+fig.update_layout(mapbox_style="open-street-map")
+st.plotly_chart(fig)
+st.write('***')
+'''
+Finalmente podemos hacer una predicción a partir de las coordenadas dadas. Se limitó a que solo se haga el calculo cuando el punto a calcular se encuentra dentro de la CDMX.
+'''
 def within_CDMX(lat,lon):
     coord=(lat, lon)
     geolocator=Nominatim(user_agent='test/1')
@@ -59,10 +106,26 @@ def within_CDMX(lat,lon):
     return dentro
 
 st.header("Calcula el costo/m2 en un punto de la CDMX")
-point=st.text_input('Escribe una coordenada con formato: lat, lon', placeholder='19.413464, -99.135515')
-a=within_CDMX(point)
-if a==False:
-    '''La coordenada dada, no está dentro en CDMX'''
+point=st.text_input('Escribe una coordenada con formato: latitud, longitud', placeholder='19.413464, -99.135515')
+
+if point=="":
+    "Sin entrada"
 else:
-    a=predict_price(19.413464, -99.135515)
-    f'''El costo del m2 es: {a}'''
+    s=point.split(",")
+    latitud=s[0]
+    longitud=s[1]
+    a=within_CDMX(latitud, longitud)
+    if a==False:
+        '''La coordenada dada, no está en CDMX'''
+    else:
+        latitud=float(latitud)
+        longitud=float(longitud)
+        costom2=predict_price(latitud, longitud)
+        f'''El costo del m2 es: ${costom2[0]}'''
+
+st.write('***')
+'''
+Los datasets y los notebooks se encuentran en el repositorio de github: https://github.com/Jhovanylara/Land-Prices-at-Mexico-City 
+'''
+
+'Autor: Jhovany Lara Nava'
