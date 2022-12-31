@@ -3,7 +3,7 @@ import pandas as pd
 #from PIL import Image
 import plotly.express as px
 import plotly.graph_objs as go
-from geopy import Nominatim
+#from geopy import Nominatim
 import urbanpy as up
 import matplotlib.pyplot as plt
 import urbanpy as up
