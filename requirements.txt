@@ -10,4 +10,4 @@ matplotlib
 mpl_toolkits
 tqdm
 seaborn
-sklearn
+scikit-learn
