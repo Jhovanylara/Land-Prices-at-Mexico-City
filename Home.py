@@ -52,7 +52,7 @@ y así podemos saber a que alcaldía pertenece cada punto a geolocalizar.
 Luego se procesaron los Outliers en la columna objetivo con un ZScore>=2.5 para así eliminar 8 elementos que pudieran
 generar ruido en la predicción.
 
-Se eligieron 4 categorías de sitios de interes que al estar más cercanos a un terreno, pudieran modificar el costo del m2 y se tomó la distancia a cada sitio de la categoría, para luego incluirlo al dataframe original. 
+Se eligieron 4 categorías de sitios de interes que al estar más cercanos a un terreno, pudieran influir en el costo del m2 y se tomó la distancia a cada sitio de la categoría, para luego incluirlo al dataframe original. 
 
     - Alimentación: Tiendas de conveniencia, carnicerías, supermercados, verdulerías, malls
     - Salud: Hospitales, farmacias, clinicas, doctores
