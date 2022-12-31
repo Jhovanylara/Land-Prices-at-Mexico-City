@@ -5,7 +5,5 @@ plotly
 urbanpy
 scipy
 matplotlib
-mpl_toolkits
-tqdm
 seaborn
 scikit-learn
