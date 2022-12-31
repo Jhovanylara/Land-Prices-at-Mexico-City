@@ -12,7 +12,8 @@ col1, col2, col3=st.columns(3)
 with col2:
     st.image('https://raw.githubusercontent.com/Jhovanylara/Land-Prices-at-Mexico-City/master/Images/logo-color.svg')
 
-st.title("TRULLY CHALLENGE")
+st.title("TRULLY CHALLENGE CDMX")
+st.image('https://raw.githubusercontent.com/Jhovanylara/Land-Prices-at-Mexico-City/master/Images/BELLAS_ARTES.jpg', use_column_width=True)
 
 st.header("Planteamiento del problema")
 '''
@@ -62,6 +63,7 @@ with tab1:
     st.dataframe(df)
 with tab2:
     'Dataframe enriquecido'
+    st.text('La columna target tiene aún datos vacíos, que luego predeciremos')
     df1=pd.read_csv('https://raw.githubusercontent.com/Jhovanylara/Land-Prices-at-Mexico-City/master/Datasets/ETL.csv')
     st.dataframe(df1)
 st.write('***')
@@ -91,7 +93,8 @@ fig.update_layout(mapbox_style="open-street-map")
 st.plotly_chart(fig)
 st.write('***')
 '''
-Finalmente podemos hacer una predicción a partir de las coordenadas dadas. Se limitó a que solo se haga el calculo cuando el punto a calcular se encuentra dentro de la CDMX.
+Ya con el dataframe listo, finalmente podemos hacer una predicción a partir de las coordenadas dadas. Se limitó a que solo se haga el calculo cuando el punto a calcular se encuentra dentro de la CDMX.
+Se contruyó una función que al obtener unas coordenadas válidas, obtiene los datos de las 4 categorías y calcula su distancia al punto a buscar, para luego hacer una predicción del costo/m2 a partir de los datos recolectados.
 '''
 def within_CDMX(lat,lon):
     coord=(lat, lon)
