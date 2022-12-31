@@ -128,7 +128,7 @@ else:
         latitud=float(latitud)
         longitud=float(longitud)
         costom2=predict_price(latitud, longitud)
-        f'''El costo del m2 es: ${costom2[0]}'''
+        f'''El costo del m2 es: ${costom2[0]} MXN'''
 
 st.write('***')
 '''
