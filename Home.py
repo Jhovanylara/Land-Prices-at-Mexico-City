@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
-from PIL import Image
+#from PIL import Image
 import plotly.express as px
 import plotly.graph_objs as go
-from prediction import predict_price
 from geopy import Nominatim
 import urbanpy as up
 import matplotlib.pyplot as plt
+import urbanpy as up
 
 col1, col2, col3=st.columns(3)
 with col2:
@@ -108,6 +108,65 @@ def within_CDMX(lat,lon):
         dentro=True
     return dentro
 
+#Creamos función para predecir
+def predict_price(latitude, longitud):
+
+    mx=up.download.nominatim_osm('Ciudad de Mexico, Mexico')
+    cdmx=pd.DataFrame({'lat':latitude,'lon':longitud}, index=[0])
+    
+    #Cargamos datos de salud
+    es=up.download.overpass_pois(bounds=mx.total_bounds, facilities='health')
+    health=['hospital', 'pharmacy','clinic', 'dentist', 'doctors']
+    for i in health:
+        z=es[es['poi_type']==i]
+        dist_up, ind_up=up.utils.nn_search(
+            tree_features=z[['lat','lon']].values,#Puntos de interes
+            query_features=cdmx[['lat','lon']].values,#coordenadas de cada colonia
+            metric='haversine' #Metrica de distancia
+        )
+        cdmx[f'{i}_dist(km)']=dist_up
+
+    #Cargamos datos de alimentos
+    es=up.download.overpass_pois(bounds=mx.total_bounds, facilities='food')
+    food=['convenience', 'supermarket','butcher', 'marketplace', 'greengrocer','mall']
+
+    for i in food:
+        z=es[es['poi_type']==i]
+        dist_up, ind_up=up.utils.nn_search(
+            tree_features=z[['lat','lon']].values,#Puntos de interes
+            query_features=cdmx[['lat','lon']].values,#coordenadas de cada colonia
+            metric='haversine' #Metrica de distancia
+        )
+        cdmx[f'{i}_dist(km)']=dist_up
+
+    #Cargamos datos de educación
+    es=up.download.overpass_pois(bounds=mx.total_bounds, facilities='education')
+    education=['school', 'university','kindergarten']
+
+    for i in education:
+        z=es[es['poi_type']==i]
+        dist_up, ind_up=up.utils.nn_search(
+            tree_features=z[['lat','lon']].values,#Puntos de interes
+            query_features=cdmx[['lat','lon']].values,#coordenadas de cada colonia
+            metric='haversine' #Metrica de distancia
+        )
+        cdmx[f'{i}_dist(km)']=dist_up
+
+    #Cargamos datos financieros
+    es=up.download.overpass_pois(bounds=mx.total_bounds, facilities='finance')
+    finance=['bank', 'atm']
+
+    for i in finance:
+        z=es[es['poi_type']==i]
+        dist_up, ind_up=up.utils.nn_search(
+            tree_features=z[['lat','lon']].values,#Puntos de interes
+            query_features=cdmx[['lat','lon']].values,#coordenadas de cada colonia
+            metric='haversine' #Metrica de distancia
+        )
+        cdmx[f'{i}_dist(km)']=dist_up
+    #return cdmx
+    prediction = model.predict(cdmx).round(2)
+    return prediction
 st.header("Calcula el costo/m2 en un punto de la CDMX")
 point=st.text_input('Escribe una coordenada con formato: latitud, longitud', placeholder='19.413464, -99.135515')
 
