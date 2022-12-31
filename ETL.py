@@ -19,7 +19,7 @@ from tqdm.notebook import tqdm
 #---------------------------#
 # Ingestamos tabla original #
 #---------------------------#
-datos=pd.read_excel('https://raw.githubusercontent.com/Jhovanylara/Land-Prices-at-Mexico-City/Datasets/Challenge%20CDMX%20Mapa%20(precio%20m2).xlsx')
+datos=pd.read_excel('https://github.com/Jhovanylara/Land-Prices-at-Mexico-City/blob/master/Datasets/Challenge_CDMX_Mapa(preciom2).xlsx?raw=true')
 df=pd.DataFrame(datos)
 
 df['Alcaldía']=df['Alcaldía'].replace(["*"], 0)#Reemplazamos el símbolo * por zeros

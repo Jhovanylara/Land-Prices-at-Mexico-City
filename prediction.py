@@ -27,7 +27,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import make_pipeline
 from sklearn.utils.validation import check_is_fitted
 
-df=pd.read_csv('ETL.csv') #Leemos csv luego del ETL
+df=pd.read_csv('https://raw.githubusercontent.com/Jhovanylara/Land-Prices-at-Mexico-City/master/Datasets/ETL.csv') #Leemos csv luego del ETL
 
 #Eliminamos columnas que no vamos a utilizar para el entrenamiento
 df.drop(columns=['hospital_near','pharmacy_near','clinic_near','dentist_near','doctors_near','convenience_near','supermarket_near','school_near','university_near','kindergarten_near','bank_near', 'atm_near', 'butcher_near', 'greengrocer_near', 'mall_near', 'marketplace_near'], inplace=True)
