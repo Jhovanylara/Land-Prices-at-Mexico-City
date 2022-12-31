@@ -1,0 +1,11 @@
+snowflake-connector-python[pandas]
+pandas
+numpy
+streamlit
+requests
+plotly
+altair
+missingno
+geopy
+prediction
+PIL
