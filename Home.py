@@ -96,8 +96,8 @@ fig.update_layout(mapbox_style="open-street-map")
 st.plotly_chart(fig)
 st.write('***')
 '''
-Ya con el dataframe listo, finalmente podemos hacer una predicción a partir de las coordenadas dadas. Se limitó a que solo se haga el calculo cuando el punto a calcular se encuentra dentro de la CDMX.
-Se contruyó una función que al obtener unas coordenadas válidas, obtiene los datos de las 4 categorías y calcula su distancia al punto a buscar, para luego hacer una predicción del costo/m2 a partir de los datos recolectados.
+Ya con el dataframe listo, finalmente podemos hacer una predicción a partir de las coordenadas dadas. Se limitó a que solo se haga el cálculo cuando el punto ingresado se encuentra dentro de la CDMX.
+Se construyó una función que al obtener unas coordenadas válidas, obtiene los datos de las 4 categorías y calcula la distancia de cada sitio al punto a buscar y lo ingresa a un nuevo dataframe, el cuál luego será usado, para hacer una predicción del costo/m2 a partir de todos los datos recolectados.
 '''
 def within_CDMX(lat,lon):
     coord=(lat, lon)
