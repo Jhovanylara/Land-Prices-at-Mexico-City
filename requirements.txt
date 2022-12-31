@@ -2,7 +2,6 @@ pandas
 numpy
 streamlit
 plotly
-geopy
 urbanpy
 scipy
 matplotlib
