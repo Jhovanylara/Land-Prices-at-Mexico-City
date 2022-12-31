@@ -1,3 +1,4 @@
+import sys
 import streamlit as st
 import pandas as pd
 #from PIL import Image
@@ -8,6 +9,7 @@ from geopy import Nominatim
 import urbanpy as up
 import matplotlib.pyplot as plt
 import urbanpy as up
+from prediction import *
 
 col1, col2, col3=st.columns(3)
 with col2:
