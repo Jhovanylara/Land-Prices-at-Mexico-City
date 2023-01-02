@@ -10,6 +10,7 @@ import urbanpy as up
 import matplotlib.pyplot as plt
 import urbanpy as up
 from prediction import *
+from Pycaretprediction import *
 
 col1, col2, col3=st.columns(3)
 with col2:
@@ -129,6 +130,9 @@ else:
         longitud=float(longitud)
         costom2=predict_price(latitud, longitud)
         f'''El costo del m2 es: ${costom2[0]} MXN'''
+        costom2PYCARET=predict_price(latitud, longitud)
+        f'''El costo del m2 es: ${costom2PYCARET[0]} MXN'''
+        F'Diferencia de modelos en pesos: ${costom2PYCARET-costom2}'
 
 st.write('***')
 '''
