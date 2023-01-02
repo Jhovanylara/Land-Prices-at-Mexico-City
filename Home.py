@@ -116,7 +116,7 @@ def within_CDMX(lat,lon):
 def validate(in_):
     
     try:
-        a, b = in_.split(",")
+        a, b = in_.split(", ")
         _, _ = str(a), str(b)
     except Exception:
         return False
