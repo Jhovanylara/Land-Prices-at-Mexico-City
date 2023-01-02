@@ -131,6 +131,7 @@ if point=="":
 elif validate(point)==False:
     "Formato inválido"
 else:
+    
     s=point.split(",")
     latitud=s[0]
     longitud=s[1]
@@ -140,6 +141,7 @@ else:
     else:
         latitud=float(latitud)
         longitud=float(longitud)
+        longitud=longitud.strip()
         costom2=predict_price(latitud, longitud)
         f'''El costo del m2 es: ${costom2[0]} MXN'''
         
