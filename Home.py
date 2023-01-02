@@ -121,7 +121,13 @@ def validate(in_):
     except Exception:
         return False
     else:
-        return True
+        try:
+            new1= float(a)
+            new = float(b)
+            return True
+        except ValueError:
+            return False
+        
 
 st.header("Calcula el costo/m2 en un punto de la CDMX")
 point=st.text_input('Escribe una coordenada con formato: latitud, longitud', placeholder='19.413464, -99.135515')
