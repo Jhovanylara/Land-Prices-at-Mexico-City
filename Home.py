@@ -126,10 +126,10 @@ def validate(in_):
 st.header("Calcula el costo/m2 en un punto de la CDMX")
 point=st.text_input('Escribe una coordenada con formato: latitud, longitud', placeholder='19.413464, -99.135515')
 
-if validate(point)==False:
-    "Formato inválido"
 if point=="":
-    "Sin entrada"
+        "Sin entrada"
+elif validate(point)==False:
+    "Formato inválido"
 else:
     s=point.split(",")
     latitud=s[0]
