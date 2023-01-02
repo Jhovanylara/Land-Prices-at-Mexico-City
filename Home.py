@@ -9,6 +9,7 @@ from geopy import Nominatim
 import urbanpy as up
 import matplotlib.pyplot as plt
 import urbanpy as up
+from pycaret.regression import *
 from prediction import *
 from Pycaretprediction import *
 

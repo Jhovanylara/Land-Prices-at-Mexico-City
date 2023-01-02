@@ -10,3 +10,4 @@ scikit-learn
 geopy
 openpyxl
 ipywidgets
+pycaret
