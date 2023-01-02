@@ -113,10 +113,21 @@ def within_CDMX(lat,lon):
         dentro=True
     return dentro
 
+def validate(in_):
+    
+    try:
+        a, b = in_.split(",")
+        _, _ = str(a), str(b)
+    except Exception:
+        return False
+    else:
+        return True
 
 st.header("Calcula el costo/m2 en un punto de la CDMX")
 point=st.text_input('Escribe una coordenada con formato: latitud, longitud', placeholder='19.413464, -99.135515')
 
+if validate(point)==False:
+    "Formato inválido"
 if point=="":
     "Sin entrada"
 else:
