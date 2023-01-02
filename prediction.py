@@ -69,7 +69,8 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.15, random_state=0)
 
 # Build Model
-model = make_pipeline(HuberRegressor())
+from sklearn.ensemble import RandomForestRegressor
+model = make_pipeline(RandomForestRegressor())
 # Fit model
 model.fit(X_train, y_train)
 #Predict

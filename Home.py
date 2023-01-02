@@ -74,7 +74,7 @@ with tab2:
 st.write('***')
 st.header("Entrenamiento")
 '''
-Para la predicción se limpiaron los Outliers, se eliminaron columnas redundantes y se entrenó con el modelo HuberRegressor. Luego se hizo la predicción
+Para la predicción se limpiaron los Outliers, se eliminaron columnas redundantes y se entrenó con el modelo RandomForestRegressor. Luego se hizo la predicción
 para cada elemento faltante en la columna target del dataframe, para quedar de la siguiente manera:
 '''
 mx=up.download.nominatim_osm('Ciudad de Mexico, Mexico')
